@@ -43,9 +43,10 @@ class Screen:
 
         pygame.display.flip()
 
-    def random_color(self):
-        r = random.randrange(0, 250)
-        g = random.randrange(0, 250)
-        b = random.randrange(0, 250)
 
-        return r, g, b
+def random_color():
+    r = random.randrange(0, 250)
+    g = random.randrange(0, 250)
+    b = random.randrange(0, 250)
+
+    return r, g, b

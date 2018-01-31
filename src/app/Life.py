@@ -7,9 +7,8 @@ from view.Screen import Screen
 
 generation = 1
 board_controller = BoardController()
-
 cell_controller = CellController()
-cells = cell_controller.generate()
+cells = []
 
 
 class App:

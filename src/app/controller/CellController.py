@@ -2,9 +2,8 @@
 import random
 import config as cfg
 from model.Cell import Cell
-from view.Screen import Screen
+import view.Screen as Screen
 
-screen = Screen(None)
 padding = 10
 
 
@@ -27,7 +26,7 @@ class CellController:
             posy = random.randrange(yfrom, yto)
 
             cell_position = (posx, posy)
-            cell_color = screen.random_color()
+            cell_color = Screen.random_color()
             cell = Cell(cell_position, cell_color)
 
             cells.append(cell)
