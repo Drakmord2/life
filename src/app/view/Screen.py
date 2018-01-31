@@ -1,4 +1,5 @@
 
+import random
 import pygame
 import config as cfg
 
@@ -8,13 +9,13 @@ class Screen:
         self._window = window
         self._font = None
 
-    def showtext(self, win, pos, text, color, bgcolor):
+    def show_text(self, win, pos, text, color, bgcolor):
         textimg = self._font.render(text, 1, color, bgcolor)
         win.blit(textimg, pos)
 
         return pos[0] + textimg.get_width() + 5, pos[1]
 
-    def showHeader(self, generation):
+    def show_header(self, generation):
         background = cfg.render['white']
         self._window.fill(background)
 
@@ -30,14 +31,21 @@ class Screen:
         generation_position = ((cfg.render['width']/2 + 40), 30)
         generation_fg = cfg.render['white']
         generation_bg = cfg.render['grey']
-        pos = self.showtext(self._window, generation_position, 'Generation:', generation_fg, generation_bg)
+        pos = self.show_text(self._window, generation_position, 'Generation:', generation_fg, generation_bg)
 
         gen_num = str(generation)
-        self.showtext(self._window, pos, gen_num, cfg.render['white'], cfg.render['grey'])
+        self.show_text(self._window, pos, gen_num, cfg.render['white'], cfg.render['grey'])
 
-    def showCells(self, cells):
+    def show_cells(self, cells):
         for cell in cells:
             surface, rect = cell.get_cell()
             self._window.blit(surface, rect)
 
         pygame.display.flip()
+
+    def random_color(self):
+        r = random.randrange(0, 250)
+        g = random.randrange(0, 250)
+        b = random.randrange(0, 250)
+
+        return r, g, b

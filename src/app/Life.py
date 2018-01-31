@@ -42,9 +42,9 @@ class App:
         pygame.time.delay(cfg.life['generation_time'])
 
     def on_render(self):
-        self._screen.showHeader(generation)
+        self._screen.show_header(generation)
 
-        self._screen.showCells(cells)
+        self._screen.show_cells(cells)
 
     def on_cleanup(self):
         print('\n- Game exited')
