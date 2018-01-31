@@ -2,11 +2,13 @@
 import pygame
 import config as cfg
 from controller.CellController import CellController
+from controller.BoardController import BoardController
 
 generation = 1
+board_controller = BoardController()
 
-controller = CellController()
-cells = controller.generate()
+cell_controller = CellController()
+cells = cell_controller.generate()
 
 
 class App:
@@ -30,7 +32,7 @@ class App:
         global cells
         global generation
 
-        cells = controller.generate()
+        cells = cell_controller.generate()
 
         print('- Generation: ' + str(generation))
         generation += 1

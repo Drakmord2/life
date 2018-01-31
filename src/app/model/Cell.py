@@ -1,12 +1,11 @@
 
 import pygame
-
-BLACK = (0, 0, 0)
+import config as cfg
 
 
 class Cell:
 
-    def __init__(self, position, color=BLACK):
+    def __init__(self, position, color=cfg.render['black']):
         self.position = position
         self.color = color
 

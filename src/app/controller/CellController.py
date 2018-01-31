@@ -1,7 +1,7 @@
 
 import random
+import config as cfg
 from model.Cell import Cell
-from model.Board import Board
 
 
 class CellController:
@@ -11,11 +11,11 @@ class CellController:
 
     def generate(self):
         cells = []
-        num_cells = random.randrange(1, 21)
+        num_cells = random.randrange(1, 11)
 
         for i in range(0, num_cells):
-            posx = random.randrange(10, 300)
-            posy = random.randrange(10, 230)
+            posx = random.randrange(10, cfg.render['width']-10)
+            posy = random.randrange(10, cfg.render['height']-10)
 
             cell_position = (posx, posy)
             cell = Cell(cell_position)
@@ -24,5 +24,3 @@ class CellController:
 
         return cells
 
-    def manage_board(self, cells, SCREEN_SIZE):
-        board = Board(SCREEN_SIZE, cells)
