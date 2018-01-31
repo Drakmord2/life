@@ -3,6 +3,7 @@ import pygame
 import config as cfg
 from controller.CellController import CellController
 from controller.BoardController import BoardController
+from view.Screen import Screen
 
 generation = 1
 board_controller = BoardController()
@@ -14,15 +15,18 @@ cells = cell_controller.generate()
 class App:
     def __init__(self):
         self._running = True
-        self._display_surf = None
-        self.SCREEN_SIZE = self.weight, self.HEIGHT = cfg.render['screen_size']
+        self._window = None
+        self._screen = None
+        self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
 
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set_mode(self.SCREEN_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self._window = pygame.display.set_mode(self.SCREEN_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
         pygame.display.set_caption('Life')
         self._running = True
-        print('- Game started\n')
+        self._screen = Screen(self._window)
+
+        print('- Game started')
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -34,18 +38,13 @@ class App:
 
         cells = cell_controller.generate()
 
-        print('- Generation: ' + str(generation))
         generation += 1
         pygame.time.delay(cfg.life['generation_time'])
 
     def on_render(self):
-        self._display_surf.fill(cfg.render['white'])
+        self._screen.showHeader(generation)
 
-        for cell in cells:
-            surface, rect = cell.get_cell()
-            self._display_surf.blit(surface, rect)
-
-        pygame.display.flip()
+        self._screen.showCells(cells)
 
     def on_cleanup(self):
         print('\n- Game exited')
