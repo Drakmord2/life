@@ -73,8 +73,8 @@ class Screen:
 
 
 def random_color():
-    r = random.randrange(0, 250)
-    g = random.randrange(0, 250)
-    b = random.randrange(0, 250)
+    r = random.randrange(10, 250)
+    g = random.randrange(10, 250)
+    b = random.randrange(10, 250)
 
     return r, g, b

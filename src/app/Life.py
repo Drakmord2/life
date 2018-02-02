@@ -6,10 +6,9 @@ from controller.CellController import CellController
 from controller.BoardController import BoardController
 from view.Screen import Screen
 
-generation = 1
 board_controller = BoardController(ci)
 cell_controller = CellController(ci)
-cells = []
+cells = cell_controller.get_cells()
 
 
 class Life:
@@ -18,6 +17,7 @@ class Life:
         self._window = None
         self._screen = None
         self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
+        self.generation = 1
 
     def on_init(self):
         pygame.init()
@@ -34,18 +34,21 @@ class Life:
 
     def on_loop(self):
         global cells
-        global generation
 
-        cells = cell_controller.generate()
+        # if self.generation == 1:
+        cells = cell_controller.lifecycle(cells)
 
-        generation += 1
+        if len(cells) == 0:
+            self._running = False
+
+        self.generation += 1
         pygame.time.delay(cfg.life['generation_time'])
 
     def on_render(self):
-        self._screen.display(generation, cells)
+        self._screen.display(self.generation, cells)  # 30x25
 
     def on_cleanup(self):
-        print('\n- Game exited')
+        print('- Game exited')
         pygame.quit()
 
     def on_execute(self):
