@@ -11,39 +11,35 @@ class CellController:
 
     def lifecycle(self, cells):
         new_cells = []
-
-        # 1   0, 1                    ->  0  # Lonely
-        # 1   4, 5, 6, 7, 8           ->  0  # Overcrowded
-        # 1   2, 3                    ->  1  # Lives
-        # 0   3                       ->  1  # It takes three to give birth!
-        # 0   0, 1, 2, 4, 5, 6, 7, 8  ->  0  # Barren
+        live_cell_slots = self.get_grid_positions(cells)
 
         for cell in cells:
-            neighbors = self.get_neighbors(cell, cells)
+            new_cell = cell
+            neighbors = self.get_neighbors(cell, live_cell_slots)
 
             if neighbors < 2 and cell.alive:
-                cell.dead()
-                new_cells.append(cell)
+                new_cell.dead()
+                new_cells.append(new_cell)
                 continue
 
             if neighbors > 3 and cell.alive:
-                cell.dead()
-                new_cells.append(cell)
+                new_cell.dead()
+                new_cells.append(new_cell)
                 continue
 
             if (neighbors == 2 or neighbors == 3) and cell.alive:
-                cell.live()
-                new_cells.append(cell)
+                new_cell.live()
+                new_cells.append(new_cell)
                 continue
 
             if neighbors == 3 and not cell.alive:
-                cell.live()
-                new_cells.append(cell)
+                new_cell.live()
+                new_cells.append(new_cell)
                 continue
 
             if neighbors != 3 and not cell.alive:
-                cell.dead()
-                new_cells.append(cell)
+                new_cell.dead()
+                new_cells.append(new_cell)
                 continue
 
         return new_cells
@@ -101,16 +97,13 @@ class CellController:
 
         return cells
 
-    # TODO Something wrong
-    def get_neighbors(self, cell, cells):
+    def get_neighbors(self, cell, live_cell_slots):
         neighbors = 0
         i, j = cell.get_position()
 
         slots = [(i-1, j-1), (i, j-1), (i+1, j-1),
                  (i-1, j), (i+1, j),
                  (i-1, j+1), (i, j+1), (i+1, j+1)]
-
-        live_cell_slots = self.get_grid_positions(cells)
 
         for s in slots:
             if s in live_cell_slots:

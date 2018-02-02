@@ -68,15 +68,18 @@ class Life:
                     self.on_event(event)
 
                 if random_seed:
+                    print('- Random seed')
                     break
 
                 if pattern:
-                    glider = [(15, 12), (14, 11)]
-                    oscilator = [(10, 11), (11, 11), (12, 11)]
-                    block = [(0, 20), (1, 20), (0, 21), (1, 21)]
-                    beacon = [(1, 1), (2, 1), (1, 2), (3, 4), (4, 4), (4, 3)]
+                    print('- Pattern')
+                    left_block = [(2, 8), (3,8), (2, 9), (3,9)]
+                    right_block = [(22, 8), (23, 8), (22, 9), (23, 9)]
+                    ship = [(7, 8), (8, 7), (8, 9), (9, 6), (9, 10), (10, 7), (10, 8), (10, 9), (11, 5), (11, 6), (11, 10), (11, 11)]
 
-                    points = beacon + glider + oscilator + block
+                    shuttle = left_block + right_block + ship
+
+                    points = shuttle
 
                     self.cells = controller.create_pattern(points)
                     break
