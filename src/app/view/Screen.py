@@ -16,9 +16,6 @@ class Screen:
         return pos[0] + textimg.get_width() + 5, pos[1]
 
     def show_header(self, generation):
-        background = cfg.render['white']
-        self._window.fill(background)
-
         header_position = (0, 0, cfg.render['width'], 50)
         header_color = cfg.render['grey']
         self._window.fill(header_color, header_position)
@@ -40,6 +37,37 @@ class Screen:
         for cell in cells:
             surface, rect = cell.get_cell()
             self._window.blit(surface, rect)
+
+    def show_board(self):
+        board_left = 10
+        board_right = cfg.render['width']-10
+        board_top = 60
+        board_bottom = cfg.render['height']-10
+
+        height = 60
+        width = 10
+
+        for i in range(0, 27):
+            start_pos = [board_left, height]
+            end_pos = [board_right, height]
+
+            pygame.draw.line(self._window, cfg.render['black'], start_pos, end_pos)
+            height += 10
+
+        for i in range(0, 32):
+            start_pos = [width, board_top]
+            end_pos = [width, board_bottom]
+
+            pygame.draw.line(self._window, cfg.render['black'], start_pos, end_pos)
+            width += 10
+
+    def display(self, generation, cells):
+        background = cfg.render['white']
+        self._window.fill(background)
+
+        self.show_board()
+        self.show_header(generation)
+        self.show_cells(cells)
 
         pygame.display.flip()
 

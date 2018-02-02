@@ -5,7 +5,7 @@ import config as cfg
 
 class Cell:
 
-    def __init__(self, position, color=cfg.render['black']):
+    def __init__(self, position, color=cfg.render['red']):
         self.position = position
         self.color = color
 

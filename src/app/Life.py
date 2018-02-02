@@ -1,17 +1,18 @@
 
 import pygame
 import config as cfg
+import dependencies as ci
 from controller.CellController import CellController
 from controller.BoardController import BoardController
 from view.Screen import Screen
 
 generation = 1
-board_controller = BoardController()
-cell_controller = CellController()
+board_controller = BoardController(ci)
+cell_controller = CellController(ci)
 cells = []
 
 
-class App:
+class Life:
     def __init__(self):
         self._running = True
         self._window = None
@@ -41,9 +42,7 @@ class App:
         pygame.time.delay(cfg.life['generation_time'])
 
     def on_render(self):
-        self._screen.show_header(generation)
-
-        self._screen.show_cells(cells)
+        self._screen.display(generation, cells)
 
     def on_cleanup(self):
         print('\n- Game exited')
@@ -61,11 +60,12 @@ class App:
                 self.on_loop()
                 self.on_render()
 
-            self.on_cleanup()
         except KeyboardInterrupt:
+            pass
+        finally:
             self.on_cleanup()
 
 
 if __name__ == "__main__":
-    theApp = App()
+    theApp = Life()
     theApp.on_execute()

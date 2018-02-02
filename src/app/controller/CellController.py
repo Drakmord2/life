@@ -1,34 +1,30 @@
 
 import random
-import config as cfg
 from model.Cell import Cell
-import view.Screen as Screen
-
-padding = 10
 
 
 class CellController:
 
-    def __init__(self):
-        pass
+    def __init__(self, ci):
+        self.ci = ci
 
     def generate(self):
         cells = []
-        num_cells = random.randrange(1, 11)
+        num_cells = random.randrange(10, 30)
 
         for i in range(0, num_cells):
-            xfrom = padding
-            xto = cfg.render['width'] - padding
-            posx = random.randrange(xfrom, xto)
+            x = random.randrange(1, 30)
+            y = random.randrange(1, 25)
 
-            yfrom = padding + cfg.render['header_height']
-            yto = cfg.render['height'] - padding
-            posy = random.randrange(yfrom, yto)
-
-            cell_position = (posx, posy)
-            cell_color = Screen.random_color()
-            cell = Cell(cell_position, cell_color)
+            cell_position = self.get_pos(x, y)
+            cell = Cell(cell_position)
 
             cells.append(cell)
 
         return cells
+
+    def get_pos(self, x, y):
+        xpos = x * 10 + 10
+        ypos = y * 10 + 60
+
+        return xpos, ypos
