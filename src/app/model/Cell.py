@@ -5,9 +5,10 @@ import config as cfg
 
 class Cell:
 
-    def __init__(self, position, color=cfg.render['red']):
+    def __init__(self, position, alive=True, color=cfg.render['red']):
         self.position = position
         self.color = color
+        self.alive = alive
 
     def get_cell(self):
         surface_size = (10, 10)
@@ -26,6 +27,14 @@ class Cell:
 
     def set_color(self, color):
         self.color = color
+
+    def live(self):
+        self.alive = True
+        self.color = cfg.render['red']
+
+    def dead(self):
+        self.alive = False
+        self.color = cfg.render['white']
 
     def grid_to_pixels(self):
         i, j = self.position

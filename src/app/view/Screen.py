@@ -25,7 +25,7 @@ class Screen:
         self._window.blit(self._font.render('Game of Life', 1, cfg.render['white'], cfg.render['grey']), title_position)
 
         self._font = pygame.font.Font(None, 20)
-        generation_position = ((cfg.render['width']/2 + 40), 30)
+        generation_position = ((cfg.render['width']/2 + 50), 30)
         generation_fg = cfg.render['white']
         generation_bg = cfg.render['grey']
         pos = self.show_text(self._window, generation_position, 'Generation:', generation_fg, generation_bg)
@@ -65,9 +65,9 @@ class Screen:
         background = cfg.render['white']
         self._window.fill(background)
 
+        self.show_cells(cells)
         self.show_board()
         self.show_header(generation)
-        self.show_cells(cells)
 
         pygame.display.flip()
 

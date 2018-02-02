@@ -10,6 +10,7 @@
 # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 import random
+import config as cfg
 from model.Cell import Cell
 
 
@@ -19,30 +20,42 @@ class CellController:
         self.ci = ci
 
     def lifecycle(self, cells):
-        new_cells = cells
+        new_cells = []
 
         for cell in cells:
             neighbors = self.get_neighbors(cell, cells)
 
-            if neighbors < 2:
-                new_cells.remove(cell)
-
-            if neighbors == 2 or neighbors == 3:
+            if neighbors < 2 and cell.alive:
+                cell.dead()
+                new_cells.append(cell)
                 continue
 
-            if neighbors > 3:
-                new_cells.remove(cell)
+            if (neighbors == 2 or neighbors == 3) and cell.alive:
+                new_cells.append(cell)
+                continue
+
+            if neighbors > 3 and cell.alive:
+                cell.dead()
+                new_cells.append(cell)
+                continue
+
+            if neighbors == 3 and not cell.alive:
+                cell.live()
+                new_cells.append(cell)
+                continue
+
+            new_cells.append(cell)
 
         return new_cells
 
     def get_cells(self):
         cells = []
         positions = []
-        num_cells = random.randrange(10, 30)
+        num_cells = random.randrange(105, 140)
 
         for i in range(0, num_cells):
-            x = random.randrange(1, 32)
-            y = random.randrange(1, 32)
+            x = random.randrange(0, 30)
+            y = random.randrange(0, 25)
 
             cell_position = (x, y)
 
@@ -51,6 +64,15 @@ class CellController:
 
                 cell = Cell(cell_position)
                 cells.append(cell)
+
+        for i in range(0, 30):
+            for j in range(0, 25):
+                dead_pos = (i, j)
+                if dead_pos not in positions:
+                    positions.append(dead_pos)
+
+                    cell = Cell(dead_pos, False, cfg.render['white'])
+                    cells.append(cell)
 
         return cells
 
@@ -76,11 +98,22 @@ class CellController:
 
         return neighbors
 
+    def cells_dead(self, cells):
+        status = True
+
+        for cell in cells:
+            if cell.alive:
+                status = False
+                break
+
+        return status
+
     def get_grid_positions(self, cells):
         positions = []
 
         for cell in cells:
-            positions.append(cell.get_position())
+            if cell.alive:
+                positions.append(cell.get_position())
 
         return positions
 

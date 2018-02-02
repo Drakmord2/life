@@ -14,5 +14,5 @@ render = {
 }
 
 life = {
-    'generation_time': 750
+    'generation_time': 500
 }

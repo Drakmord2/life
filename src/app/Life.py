@@ -3,21 +3,17 @@ import pygame
 import config as cfg
 import dependencies as ci
 from controller.CellController import CellController
-from controller.BoardController import BoardController
 from view.Screen import Screen
-
-board_controller = BoardController(ci)
-cell_controller = CellController(ci)
-cells = cell_controller.get_cells()
 
 
 class Life:
-    def __init__(self):
+    def __init__(self, cells):
         self._running = True
         self._window = None
         self._screen = None
         self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
         self.generation = 1
+        self.cells = cells
 
     def on_init(self):
         pygame.init()
@@ -33,19 +29,17 @@ class Life:
             self._running = False
 
     def on_loop(self):
-        global cells
-
-        # if self.generation == 1:
-        cells = cell_controller.lifecycle(cells)
-
-        if len(cells) == 0:
-            self._running = False
-
         self.generation += 1
         pygame.time.delay(cfg.life['generation_time'])
 
+        self.cells = controller.lifecycle(self.cells)
+
+        if controller.cells_dead(self.cells):
+            print('- All cells died')
+            self._running = False
+
     def on_render(self):
-        self._screen.display(self.generation, cells)  # 30x25
+        self._screen.display(self.generation, self.cells)  # 30x25
 
     def on_cleanup(self):
         print('- Game exited')
@@ -60,8 +54,8 @@ class Life:
                 for event in pygame.event.get():
                     self.on_event(event)
 
-                self.on_loop()
                 self.on_render()
+                self.on_loop()
 
         except KeyboardInterrupt:
             pass
@@ -70,5 +64,11 @@ class Life:
 
 
 if __name__ == "__main__":
-    theApp = Life()
-    theApp.on_execute()
+    controller = CellController(ci)
+
+    # controller.create_cell()
+
+    seed = controller.get_cells()
+
+    app = Life(seed)
+    app.on_execute()
