@@ -9,6 +9,36 @@ class Screen:
         self._window = window
         self._font = None
 
+    def main(self):
+        header_position = (0, 0, cfg.render['width'], cfg.render['height'])
+        header_color = cfg.render['grey']
+        self._window.fill(header_color, header_position)
+
+        self._font = pygame.font.Font(None, 42)
+        title_position = (65, 50)
+        self._window.blit(self._font.render('Game of Life', 1, cfg.render['white'], cfg.render['grey']), title_position)
+
+        block_position = (30, 140, 270, 85)
+        block_color = cfg.render['white']
+        self._window.fill(block_color, block_position)
+
+        self._font = pygame.font.Font(None, 20)
+        msg_position = (60, 160)
+        msg_fg = cfg.render['black']
+        msg_bg = cfg.render['white']
+        msg = 'Left click to start a random game'
+        self.show_text(self._window, msg_position, msg, msg_fg, msg_bg)
+
+        msg_position = (75, 190)
+        msg2 = 'Right click to create a pattern'
+        self.show_text(self._window, msg_position, msg2, msg_fg, msg_bg)
+
+        footer_position = (110, 300)
+        footer = '© Drakmord2'
+        self.show_text(self._window, footer_position, footer, cfg.render['white'], cfg.render['grey'])
+
+        pygame.display.flip()
+
     def show_text(self, win, pos, text, color, bgcolor):
         textimg = self._font.render(text, 1, color, bgcolor)
         win.blit(textimg, pos)

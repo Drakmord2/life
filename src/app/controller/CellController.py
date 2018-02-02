@@ -41,7 +41,7 @@ class CellController:
     def get_cells(self):
         cells = []
         positions = []
-        num_cells = random.randrange(105, 140)
+        num_cells = random.randrange(135, 140)
 
         for i in range(0, num_cells):
             x = random.randrange(0, 30)

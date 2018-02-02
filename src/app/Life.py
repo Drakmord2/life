@@ -25,8 +25,14 @@ class Life:
         print('- Game started')
 
     def on_event(self, event):
+        global random_seed
+
         if event.type == pygame.QUIT:
             self._running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.dict['button'] == 1:
+                random_seed = True
 
     def on_loop(self):
         self.generation += 1
@@ -41,6 +47,9 @@ class Life:
     def on_render(self):
         self._screen.display(self.generation, self.cells)  # 30x25
 
+    def main_screen(self):
+        self._screen.main()
+
     def on_cleanup(self):
         print('- Game exited')
         pygame.quit()
@@ -49,6 +58,15 @@ class Life:
         try:
             if self.on_init() is False:
                 self._running = False
+
+            while self._running:
+                for event in pygame.event.get():
+                    self.on_event(event)
+
+                if random_seed:
+                    break
+
+                self.main_screen()
 
             while self._running:
                 for event in pygame.event.get():
@@ -68,6 +86,7 @@ if __name__ == "__main__":
 
     # controller.create_cell()
 
+    random_seed = False
     seed = controller.get_cells()
 
     app = Life(seed)
