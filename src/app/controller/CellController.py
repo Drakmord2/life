@@ -12,6 +12,12 @@ class CellController:
     def lifecycle(self, cells):
         new_cells = []
 
+        # 1   0, 1                    ->  0  # Lonely
+        # 1   4, 5, 6, 7, 8           ->  0  # Overcrowded
+        # 1   2, 3                    ->  1  # Lives
+        # 0   3                       ->  1  # It takes three to give birth!
+        # 0   0, 1, 2, 4, 5, 6, 7, 8  ->  0  # Barren
+
         for cell in cells:
             neighbors = self.get_neighbors(cell, cells)
 
@@ -20,12 +26,13 @@ class CellController:
                 new_cells.append(cell)
                 continue
 
-            if (neighbors == 2 or neighbors == 3) and cell.alive:
+            if neighbors > 3 and cell.alive:
+                cell.dead()
                 new_cells.append(cell)
                 continue
 
-            if neighbors > 3 and cell.alive:
-                cell.dead()
+            if (neighbors == 2 or neighbors == 3) and cell.alive:
+                cell.live()
                 new_cells.append(cell)
                 continue
 
@@ -34,7 +41,10 @@ class CellController:
                 new_cells.append(cell)
                 continue
 
-            new_cells.append(cell)
+            if neighbors != 3 and not cell.alive:
+                cell.dead()
+                new_cells.append(cell)
+                continue
 
         return new_cells
 
@@ -44,8 +54,8 @@ class CellController:
         num_cells = random.randrange(135, 140)
 
         for i in range(0, num_cells):
-            x = random.randrange(0, 30)
-            y = random.randrange(0, 25)
+            x = random.randrange(0, 31)
+            y = random.randrange(0, 26)
 
             cell_position = (x, y)
 
@@ -64,14 +74,34 @@ class CellController:
                     cell = Cell(dead_pos, False, cfg.render['white'])
                     cells.append(cell)
 
-        return cells
-
-    def create_cell(self, position, cells):
-        cell = Cell(position)
-        cells.append(cell)
+        cells = self.sort_cells(cells)
 
         return cells
 
+    def create_pattern(self, pattern):
+        cells = []
+        positions = []
+
+        for position in pattern:
+            positions.append(position)
+
+            cell = Cell(position)
+            cells.append(cell)
+
+        for i in range(0, 30):
+            for j in range(0, 25):
+                dead_pos = (i, j)
+                if dead_pos not in positions:
+                    positions.append(dead_pos)
+
+                    cell = Cell(dead_pos, False, cfg.render['white'])
+                    cells.append(cell)
+
+        cells = self.sort_cells(cells)
+
+        return cells
+
+    # TODO Something wrong
     def get_neighbors(self, cell, cells):
         neighbors = 0
         i, j = cell.get_position()
@@ -80,13 +110,34 @@ class CellController:
                  (i-1, j), (i+1, j),
                  (i-1, j+1), (i, j+1), (i+1, j+1)]
 
-        cell_slots = self.get_grid_positions(cells)
+        live_cell_slots = self.get_grid_positions(cells)
 
         for s in slots:
-            if s in cell_slots:
+            if s in live_cell_slots:
                 neighbors += 1
 
         return neighbors
+
+    def get_grid_positions(self, cells):
+        positions = []
+
+        for cell in cells:
+            if cell.alive:
+                positions.append(cell.get_position())
+
+        return positions
+
+    def sort_cells(self, cells):
+        sorted_cells = []
+
+        for j in range(0, 25):
+            for i in range(0, 30):
+                pos = (i, j)
+                for cell in cells:
+                    if cell.position == pos:
+                        sorted_cells.append(cell)
+
+        return sorted_cells
 
     def cells_dead(self, cells):
         status = True
@@ -97,15 +148,6 @@ class CellController:
                 break
 
         return status
-
-    def get_grid_positions(self, cells):
-        positions = []
-
-        for cell in cells:
-            if cell.alive:
-                positions.append(cell.get_position())
-
-        return positions
 
     def grid_to_pixels(self, x, y):
         xpos = x * 10 + 10

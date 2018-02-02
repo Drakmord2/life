@@ -26,13 +26,17 @@ class Life:
 
     def on_event(self, event):
         global random_seed
+        global pattern
 
         if event.type == pygame.QUIT:
             self._running = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.dict['button'] == 1:
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.dict['button'] == 5:
                 random_seed = True
+
+            if event.dict['button'] == 4:
+                pattern = True
 
     def on_loop(self):
         self.generation += 1
@@ -66,6 +70,17 @@ class Life:
                 if random_seed:
                     break
 
+                if pattern:
+                    glider = [(15, 12), (14, 11)]
+                    oscilator = [(10, 11), (11, 11), (12, 11)]
+                    block = [(0, 20), (1, 20), (0, 21), (1, 21)]
+                    beacon = [(1, 1), (2, 1), (1, 2), (3, 4), (4, 4), (4, 3)]
+
+                    points = beacon + glider + oscilator + block
+
+                    self.cells = controller.create_pattern(points)
+                    break
+
                 self.main_screen()
 
             while self._running:
@@ -84,8 +99,7 @@ class Life:
 if __name__ == "__main__":
     controller = CellController(ci)
 
-    # controller.create_cell()
-
+    pattern = False
     random_seed = False
     seed = controller.get_cells()
 

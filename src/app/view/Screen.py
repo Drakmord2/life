@@ -23,14 +23,14 @@ class Screen:
         self._window.fill(block_color, block_position)
 
         self._font = pygame.font.Font(None, 20)
-        msg_position = (60, 160)
+        msg_position = (50, 160)
         msg_fg = cfg.render['black']
         msg_bg = cfg.render['white']
-        msg = 'Left click to start a random game'
+        msg = 'Scroll down to start a random game'
         self.show_text(self._window, msg_position, msg, msg_fg, msg_bg)
 
-        msg_position = (75, 190)
-        msg2 = 'Right click to create a pattern'
+        msg_position = (70, 190)
+        msg2 = 'Scroll up to create a pattern'
         self.show_text(self._window, msg_position, msg2, msg_fg, msg_bg)
 
         footer_position = (110, 300)
