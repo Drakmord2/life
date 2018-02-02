@@ -16,4 +16,4 @@ At each step in time, the following transitions occur:
  [Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
  
 
-![](https://github.com/Drakmord2/life/tree/master/docs/images/random-seed.png)
+![](https://github.com/Drakmord2/life/blob/master/docs/images/random-seed.png)
