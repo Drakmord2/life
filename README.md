@@ -15,7 +15,7 @@ At each step in time, the following transitions occur:
  
 ## Modes
 
-###Random Seed
+### Random Seed
 ![Random](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)
 
 Start the game with a random initial configuration.
