@@ -13,5 +13,14 @@ At each step in time, the following transitions occur:
  - Any live cell with more than three live neighbours dies, as if by overpopulation.
  - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
  
+## Modes
 
-![](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)
+###Random Seed
+![Random](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)
+
+Start the game with a random initial configuration.
+
+### Patterns
+![Life](https://github.com/Drakmord2/life/blob/master/assets/images/life.png)
+
+User-defined patterns

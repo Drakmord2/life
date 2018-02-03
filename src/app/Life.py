@@ -111,8 +111,9 @@ class Life:
                 for event in pygame.event.get():
                     self.on_event(event)
 
-                self.on_render()
-                self.on_loop()
+                if pattern or random_seed:
+                    self.on_render()
+                    self.on_loop()
 
         except KeyboardInterrupt:
             pass
