@@ -14,7 +14,7 @@ class Life:
         self._screen = None
         self.on_menu = True
         self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
-        self.generation = 1
+        self.generation = 0
         self.cells = None
 
     def on_init(self):
@@ -78,6 +78,24 @@ class Life:
     def main_screen(self):
         self._screen.main()
 
+    def main_menu(self):
+        while self.on_menu:
+            for event in pygame.event.get():
+                self.on_menu_event(event)
+
+            if random_seed:
+                print('- Random seed')
+                break
+
+            if pattern:
+                print('- Pattern')
+                points = patterns.life()
+
+                self.cells = controller.create_pattern(points)
+                break
+
+            self.main_screen()
+
     def on_cleanup(self):
         print('- Game exited')
         pygame.quit()
@@ -88,23 +106,7 @@ class Life:
                 self._running = False
 
             while self._running:
-
-                while self.on_menu:
-                    for event in pygame.event.get():
-                        self.on_menu_event(event)
-
-                    if random_seed:
-                        print('- Random seed')
-                        break
-
-                    if pattern:
-                        print('- Pattern')
-                        points = patterns.shuttle()
-
-                        self.cells = controller.create_pattern(points)
-                        break
-
-                    self.main_screen()
+                self.main_menu()
 
                 for event in pygame.event.get():
                     self.on_event(event)
