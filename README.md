@@ -15,12 +15,16 @@ At each step in time, the following transitions occur:
  
 ## Modes
 
+Two modes of operation are available:
+
 ### Random Seed
 ![Random](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)
 
-Start the game with a random initial configuration.
+- Start the game with a random initial configuration.
 
 ### Patterns
-![Life](https://github.com/Drakmord2/life/blob/master/assets/images/life.png)
+<img src="https://github.com/Drakmord2/life/blob/master/assets/images/life.png" width="320" height="320" />
 
-User-defined patterns
+- User-defined patterns
+
+ They can be accessed using the mouse scroll or dragging with two fingers on a laptop. You can exit at any time by right-clicking the screen.
