@@ -4,16 +4,18 @@ import config as cfg
 import dependencies as ci
 from controller.CellController import CellController
 from view.Screen import Screen
+import view.patterns as patterns
 
 
 class Life:
-    def __init__(self, cells):
+    def __init__(self):
         self._running = True
         self._window = None
         self._screen = None
+        self.on_menu = True
         self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
         self.generation = 1
-        self.cells = cells
+        self.cells = None
 
     def on_init(self):
         pygame.init()
@@ -24,19 +26,41 @@ class Life:
 
         print('- Game started')
 
+    def on_menu_event(self, event):
+        global random_seed
+        global pattern
+
+        if event.type == pygame.QUIT:
+            self._running = False
+            self.on_menu = False
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.dict['button'] == 5:
+                self.cells = controller.get_cells()
+
+                random_seed = True
+                self.on_menu = False
+
+            if event.dict['button'] == 4:
+                pattern = True
+                self.on_menu = False
+
     def on_event(self, event):
         global random_seed
         global pattern
 
         if event.type == pygame.QUIT:
             self._running = False
+            random_seed = False
+            pattern = False
+            self.on_menu = False
 
         if event.type == pygame.MOUSEBUTTONUP:
-            if event.dict['button'] == 5:
-                random_seed = True
-
-            if event.dict['button'] == 4:
-                pattern = True
+            if event.dict['button'] == 3:
+                self.on_menu = True
+                random_seed = False
+                pattern = False
+                self.generation = 0
 
     def on_loop(self):
         self.generation += 1
@@ -64,29 +88,24 @@ class Life:
                 self._running = False
 
             while self._running:
-                for event in pygame.event.get():
-                    self.on_event(event)
 
-                if random_seed:
-                    print('- Random seed')
-                    break
+                while self.on_menu:
+                    for event in pygame.event.get():
+                        self.on_menu_event(event)
 
-                if pattern:
-                    print('- Pattern')
-                    left_block = [(2, 8), (3,8), (2, 9), (3,9)]
-                    right_block = [(22, 8), (23, 8), (22, 9), (23, 9)]
-                    ship = [(7, 8), (8, 7), (8, 9), (9, 6), (9, 10), (10, 7), (10, 8), (10, 9), (11, 5), (11, 6), (11, 10), (11, 11)]
+                    if random_seed:
+                        print('- Random seed')
+                        break
 
-                    shuttle = left_block + right_block + ship
+                    if pattern:
+                        print('- Pattern')
+                        points = patterns.shuttle()
 
-                    points = shuttle
+                        self.cells = controller.create_pattern(points)
+                        break
 
-                    self.cells = controller.create_pattern(points)
-                    break
+                    self.main_screen()
 
-                self.main_screen()
-
-            while self._running:
                 for event in pygame.event.get():
                     self.on_event(event)
 
@@ -104,7 +123,6 @@ if __name__ == "__main__":
 
     pattern = False
     random_seed = False
-    seed = controller.get_cells()
 
-    app = Life(seed)
+    app = Life()
     app.on_execute()
