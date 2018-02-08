@@ -50,12 +50,12 @@ class Screen:
         header_color = cfg.render['grey']
         self._window.fill(header_color, header_position)
 
-        self._font = pygame.font.Font(None, 26)
-        title_position = (10, 10)
+        self._font = pygame.font.Font(None, 35)
+        title_position = (310, 12)
         self._window.blit(self._font.render('Game of Life', 1, cfg.render['white'], cfg.render['grey']), title_position)
 
-        self._font = pygame.font.Font(None, 20)
-        generation_position = ((cfg.render['width']/2 + 50), 30)
+        self._font = pygame.font.Font(None, 25)
+        generation_position = ((cfg.render['width'] - 180), 25)
         generation_fg = cfg.render['white']
         generation_bg = cfg.render['grey']
         pos = self.show_text(self._window, generation_position, 'Generation:', generation_fg, generation_bg)
@@ -74,17 +74,20 @@ class Screen:
         board_top = 60
         board_bottom = cfg.render['height']-10
 
+        rows = cfg.render['rows']
+        columns = cfg.render['columns']
+
         height = 60
         width = 10
 
-        for i in range(0, 27):
+        for i in range(0, rows):
             start_pos = [board_left, height]
             end_pos = [board_right, height]
 
             pygame.draw.line(self._window, cfg.render['black'], start_pos, end_pos)
             height += 10
 
-        for i in range(0, 32):
+        for i in range(0, columns):
             start_pos = [width, board_top]
             end_pos = [width, board_bottom]
 

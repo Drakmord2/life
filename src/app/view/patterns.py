@@ -3,21 +3,25 @@
 
 
 def shuttle():
-    left_block = [(2, 8), (3, 8), (2, 9), (3, 9)]
-    right_block = [(22, 8), (23, 8), (22, 9), (23, 9)]
-    ship = [(7, 8), (8, 7), (8, 9), (9, 6), (9, 10), (10, 7), (10, 8), (10, 9), (11, 5), (11, 6), (11, 10), (11, 11)]
+    left_block = [(22, 28), (23, 28), (22, 29), (23, 29)]
+    right_block = [(32, 28), (33, 28), (32, 29), (33, 29)]
+    ship = [(27, 28), (28, 27), (28, 29), (29, 26), (29, 30), (30, 27), (30, 28), (30, 29), (31, 25), (31, 26), (31, 30), (31, 31)]
 
     points = left_block + right_block + ship
 
     return points
 
 
-def glider_gun():
-    pass
+def glider_gun(x, y):
 
+    left_block = [(x-1, y), (x, y), (x-1, y+1), (x, y+1)]
+    left_part = [(x+9, y), (x+9, y+1), (x+9, y+2), (x+10, y-1), (x+10, y+3), (x+11, y-2), (x+11, y+4), (x+12, y-2),
+                 (x+12, y+4), (x+13, y+1), (x+14, y-1), (x+14, y+3), (x+15, y), (x+15, y+1), (x+15, y+2), (x+16, y+1)]
+    right_part = [(x + 19, y), (x + 19, y - 1), (x + 19, y - 2), (x + 20, y), (x + 20, y - 1), (x + 20, y - 2),
+                  (x + 21, y + 1), (x + 21, y - 3), (x + 23, y + 1), (x + 23, y + 2), (x + 23, y - 3), (x + 23, y - 4)]
+    right_block = [(x + 33, y - 1), (x + 33, y - 2), (x + 34, y - 1), (x + 34, y - 2)]
 
-def glider():
-    points = [(15, 13), (16, 13), (17, 13), (17, 12), (16, 11)]
+    points = left_block + left_part + right_part + right_block
 
     return points
 
@@ -28,8 +32,8 @@ def nova():
     return points
 
 
-def die_hard():
-    points = [(15, 12), (16, 12), (16, 13), (20, 13), (21, 13), (22, 13), (21, 11)]
+def die_hard(x, y):
+    points = [(x, y), (x+1, y), (x+1, y+1), (x+5, y+1), (x+5, y+1), (x+6, y+1), (x+5, y-1)]
 
     return points
 

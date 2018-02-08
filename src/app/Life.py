@@ -73,7 +73,7 @@ class Life:
             self._running = False
 
     def on_render(self):
-        self._screen.display(self.generation, self.cells)  # 30x25
+        self._screen.display(self.generation, self.cells)
 
     def main_screen(self):
         self._screen.main()
@@ -89,7 +89,7 @@ class Life:
 
             if pattern:
                 print('- Pattern')
-                points = patterns.life()
+                points = patterns.glider_gun(15, 10)
 
                 self.cells = controller.create_pattern(points)
                 break

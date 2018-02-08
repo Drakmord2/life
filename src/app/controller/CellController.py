@@ -47,11 +47,18 @@ class CellController:
     def get_cells(self):
         cells = []
         positions = []
-        num_cells = random.randrange(165, 180)
+
+        min_cells = cfg.life['min_cells']
+        max_cells = cfg.life['max_cells']
+
+        num_cells = random.randrange(min_cells, max_cells)
+
+        rows = cfg.render['rows']
+        columns = cfg.render['columns']
 
         for i in range(0, num_cells):
-            x = random.randrange(0, 31)
-            y = random.randrange(0, 26)
+            x = random.randrange(0, columns-1)
+            y = random.randrange(0, rows-1)
 
             cell_position = (x, y)
 
@@ -61,8 +68,8 @@ class CellController:
                 cell = Cell(cell_position)
                 cells.append(cell)
 
-        for i in range(0, 30):
-            for j in range(0, 25):
+        for i in range(0, columns-1):
+            for j in range(0, rows-1):
                 dead_pos = (i, j)
                 if dead_pos not in positions:
                     positions.append(dead_pos)
@@ -78,14 +85,17 @@ class CellController:
         cells = []
         positions = []
 
+        rows = cfg.render['rows']
+        columns = cfg.render['columns']
+
         for position in pattern:
             positions.append(position)
 
             cell = Cell(position)
             cells.append(cell)
 
-        for i in range(0, 30):
-            for j in range(0, 25):
+        for i in range(0, columns-1):
+            for j in range(0, rows-1):
                 dead_pos = (i, j)
                 if dead_pos not in positions:
                     positions.append(dead_pos)
@@ -123,8 +133,11 @@ class CellController:
     def sort_cells(self, cells):
         sorted_cells = []
 
-        for j in range(0, 25):
-            for i in range(0, 30):
+        rows = cfg.render['rows']
+        columns = cfg.render['columns']
+
+        for j in range(0, rows-1):
+            for i in range(0, columns-1):
                 pos = (i, j)
                 for cell in cells:
                     if cell.position == pos:

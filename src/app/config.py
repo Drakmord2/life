@@ -3,10 +3,12 @@
 # Configurations
 
 render = {
-    'width': 320,
-    'height': 320,
-    'screen_size': (320, 320),
+    'width': 800,
+    'height': 600,
+    'screen_size': (800, 600),
     'header_height': 50,
+    'rows': 54,
+    'columns': 79,
     'black': (0, 0, 0),
     'white': (255, 255, 255),
     'grey': (50, 50, 50),
@@ -14,5 +16,7 @@ render = {
 }
 
 life = {
-    'generation_time': 250
+    'generation_time': 20,
+    'min_cells': 400,
+    'max_cells': 600
 }
