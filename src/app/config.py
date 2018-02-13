@@ -16,7 +16,7 @@ render = {
 }
 
 life = {
-    'generation_time': 20,
+    'generation_time': 40,
     'min_cells': 400,
     'max_cells': 600
 }

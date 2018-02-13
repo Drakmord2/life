@@ -4,7 +4,6 @@ import config as cfg
 import dependencies as ci
 from controller.CellController import CellController
 from view.Screen import Screen
-import view.patterns as patterns
 
 
 class Life:
@@ -19,12 +18,9 @@ class Life:
 
     def on_init(self):
         pygame.init()
-        self._window = pygame.display.set_mode(self.SCREEN_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
-        pygame.display.set_caption('Life')
-        self._running = True
+        self._window = pygame.display.set_mode(self.SCREEN_SIZE, pygame.NOFRAME)
         self._screen = Screen(self._window)
-
-        print('- Game started')
+        self._running = True
 
     def on_menu_event(self, event):
         global random_seed
@@ -45,6 +41,10 @@ class Life:
                 pattern = True
                 self.on_menu = False
 
+            if event.dict['button'] == 3:
+                self._running = False
+                self.on_menu = False
+
     def on_event(self, event):
         global random_seed
         global pattern
@@ -63,14 +63,11 @@ class Life:
                 self.generation = 0
 
     def on_loop(self):
-        self.generation += 1
+        if controller.cells_alive(self.cells):
+            self.generation += 1
+            self.cells = controller.lifecycle(self.cells)
+
         pygame.time.delay(cfg.life['generation_time'])
-
-        self.cells = controller.lifecycle(self.cells)
-
-        if controller.cells_dead(self.cells):
-            print('- All cells died')
-            self._running = False
 
     def on_render(self):
         self._screen.display(self.generation, self.cells)
@@ -83,13 +80,10 @@ class Life:
             for event in pygame.event.get():
                 self.on_menu_event(event)
 
-            if random_seed:
-                print('- Random seed')
-                break
-
             if pattern:
-                print('- Pattern')
-                points = patterns.glider_gun(15, 10)
+                self.cells = []
+
+                points = self._screen.display_pattern()
 
                 self.cells = controller.create_pattern(points)
                 break
@@ -97,7 +91,6 @@ class Life:
             self.main_screen()
 
     def on_cleanup(self):
-        print('- Game exited')
         pygame.quit()
 
     def on_execute(self):

@@ -3,7 +3,7 @@ import pygame
 import config as cfg
 
 
-class Cell:
+class Cell(object):
 
     def __init__(self, position, alive=True, color=cfg.render['red']):
         self.position = position

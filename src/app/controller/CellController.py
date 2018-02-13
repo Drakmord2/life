@@ -107,6 +107,15 @@ class CellController:
 
         return cells
 
+    def set_cells(self, positions):
+        cells = []
+
+        for position in positions:
+            cell = Cell(position)
+            cells.append(cell)
+
+        return cells
+
     def get_neighbors(self, cell, live_cell_slots):
         neighbors = 0
         i, j = cell.get_position()
@@ -145,12 +154,12 @@ class CellController:
 
         return sorted_cells
 
-    def cells_dead(self, cells):
-        status = True
+    def cells_alive(self, cells):
+        status = False
 
         for cell in cells:
             if cell.alive:
-                status = False
+                status = True
                 break
 
         return status
