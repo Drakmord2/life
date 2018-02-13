@@ -1,13 +1,13 @@
 
 import random
-import config as cfg
-from model.Cell import Cell
+from app.model.cell import Cell
 
 
-class CellController:
+class CellController(object):
 
     def __init__(self, ci):
         self.ci = ci
+        self.cfg = ci.get('config')
 
     def lifecycle(self, cells):
         new_cells = []
@@ -48,13 +48,13 @@ class CellController:
         cells = []
         positions = []
 
-        min_cells = cfg.life['min_cells']
-        max_cells = cfg.life['max_cells']
+        min_cells = self.cfg.life['min_cells']
+        max_cells = self.cfg.life['max_cells']
 
         num_cells = random.randrange(min_cells, max_cells)
 
-        rows = cfg.render['rows']
-        columns = cfg.render['columns']
+        rows = self.cfg.render['rows']
+        columns = self.cfg.render['columns']
 
         for i in range(0, num_cells):
             x = random.randrange(0, columns-1)
@@ -74,7 +74,7 @@ class CellController:
                 if dead_pos not in positions:
                     positions.append(dead_pos)
 
-                    cell = Cell(dead_pos, False, cfg.render['white'])
+                    cell = Cell(dead_pos, False, self.cfg.render['white'])
                     cells.append(cell)
 
         cells = self.sort_cells(cells)
@@ -85,8 +85,8 @@ class CellController:
         cells = []
         positions = []
 
-        rows = cfg.render['rows']
-        columns = cfg.render['columns']
+        rows = self.cfg.render['rows']
+        columns = self.cfg.render['columns']
 
         for position in pattern:
             positions.append(position)
@@ -100,7 +100,7 @@ class CellController:
                 if dead_pos not in positions:
                     positions.append(dead_pos)
 
-                    cell = Cell(dead_pos, False, cfg.render['white'])
+                    cell = Cell(dead_pos, False, self.cfg.render['white'])
                     cells.append(cell)
 
         cells = self.sort_cells(cells)
@@ -142,8 +142,8 @@ class CellController:
     def sort_cells(self, cells):
         sorted_cells = []
 
-        rows = cfg.render['rows']
-        columns = cfg.render['columns']
+        rows = self.cfg.render['rows']
+        columns = self.cfg.render['columns']
 
         for j in range(0, rows-1):
             for i in range(0, columns-1):

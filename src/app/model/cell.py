@@ -1,6 +1,6 @@
 
 import pygame
-import config as cfg
+import app.config as cfg
 
 
 class Cell(object):

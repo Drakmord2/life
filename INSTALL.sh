@@ -4,6 +4,14 @@
 
 INSTALL_DIR=$PWD
 
+OS="$(uname)"
+
+if [ $OS != "Linux" ]
+then
+    echo "Not running on Linux. Current OS: ($OS) \n"
+    exit 1
+fi
+
 mkdir --parents /opt/drakmord/life/assets/images
 
 cp $INSTALL_DIR/RUN /opt/drakmord/life

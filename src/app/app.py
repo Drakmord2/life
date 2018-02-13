@@ -1,31 +1,34 @@
 
 import pygame
-import config as cfg
-import dependencies as ci
-from controller.CellController import CellController
-from view.Screen import Screen
+from app.view.screen import Screen
+from app.controller.cell_controller import CellController
 
 
-class Life:
-    def __init__(self):
-        self._running = True
+class App(object):
+    def __init__(self, ci):
+        self.ci = ci
+        self.cfg = ci.get('config')
+        self._running = False
         self._window = None
         self._screen = None
-        self.on_menu = True
-        self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = cfg.render['screen_size']
+        self.SCREEN_SIZE = self.WEIGHT, self.HEIGHT = self.cfg.render['screen_size']
+
         self.generation = 0
         self.cells = None
+        self.on_menu = True
+        self.pattern = False
+        self.random_seed = False
+
+        global controller
+        controller = CellController(ci)
 
     def on_init(self):
         pygame.init()
         self._window = pygame.display.set_mode(self.SCREEN_SIZE, pygame.NOFRAME)
-        self._screen = Screen(self._window)
+        self._screen = Screen(self._window, self.ci)
         self._running = True
 
     def on_menu_event(self, event):
-        global random_seed
-        global pattern
-
         if event.type == pygame.QUIT:
             self._running = False
             self.on_menu = False
@@ -34,11 +37,11 @@ class Life:
             if event.dict['button'] == 5:
                 self.cells = controller.get_cells()
 
-                random_seed = True
+                self.random_seed = True
                 self.on_menu = False
 
             if event.dict['button'] == 4:
-                pattern = True
+                self.pattern = True
                 self.on_menu = False
 
             if event.dict['button'] == 3:
@@ -46,20 +49,17 @@ class Life:
                 self.on_menu = False
 
     def on_event(self, event):
-        global random_seed
-        global pattern
-
         if event.type == pygame.QUIT:
             self._running = False
-            random_seed = False
-            pattern = False
+            self.random_seed = False
+            self.pattern = False
             self.on_menu = False
 
         if event.type == pygame.MOUSEBUTTONUP:
             if event.dict['button'] == 3:
                 self.on_menu = True
-                random_seed = False
-                pattern = False
+                self.random_seed = False
+                self.pattern = False
                 self.generation = 0
 
     def on_loop(self):
@@ -67,7 +67,7 @@ class Life:
             self.generation += 1
             self.cells = controller.lifecycle(self.cells)
 
-        pygame.time.delay(cfg.life['generation_time'])
+        pygame.time.delay(self.cfg.life['generation_time'])
 
     def on_render(self):
         self._screen.display(self.generation, self.cells)
@@ -80,7 +80,7 @@ class Life:
             for event in pygame.event.get():
                 self.on_menu_event(event)
 
-            if pattern:
+            if self.pattern:
                 self.cells = []
 
                 points = self._screen.display_pattern(controller)
@@ -90,13 +90,12 @@ class Life:
 
             self.main_screen()
 
-    def on_cleanup(self):
-        pygame.quit()
-
     def on_execute(self):
         try:
             if self.on_init() is False:
-                self._running = False
+                return
+
+            pygame.event.set_grab(1)
 
             while self._running:
                 self.main_menu()
@@ -104,21 +103,11 @@ class Life:
                 for event in pygame.event.get():
                     self.on_event(event)
 
-                if pattern or random_seed:
+                if self.pattern or self.random_seed:
                     self.on_render()
                     self.on_loop()
 
         except KeyboardInterrupt:
             pass
         finally:
-            self.on_cleanup()
-
-
-if __name__ == "__main__":
-    controller = CellController(ci)
-
-    pattern = False
-    random_seed = False
-
-    app = Life()
-    app.on_execute()
+            pygame.quit()
