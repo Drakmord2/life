@@ -15,7 +15,7 @@ At each step in time, the following transitions occur:
  
 ## Modes
 
-Two modes of operation are available:
+Two game modes are available:
 
 ### Random Seed
 ![Random](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)

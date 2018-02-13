@@ -83,7 +83,7 @@ class Life:
             if pattern:
                 self.cells = []
 
-                points = self._screen.display_pattern()
+                points = self._screen.display_pattern(controller)
 
                 self.cells = controller.create_pattern(points)
                 break

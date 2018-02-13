@@ -1,11 +1,6 @@
 
-import random
 import pygame
 import config as cfg
-
-# TODO Delegate
-import dependencies as ci
-from controller.CellController import CellController
 
 
 # TODO Refactor methods
@@ -76,11 +71,10 @@ class Screen(object):
         self._window.fill(header_color, header_position)
 
         self._font = pygame.font.Font(None, 35)
-        title_position = (310, 12)
-        self._window.blit(self._font.render('Crate Pattern', 1, cfg.render['white'], cfg.render['grey']), title_position)
+        title_position = (300, 12)
+        self._window.blit(self._font.render('Create Pattern', 1, cfg.render['white'], cfg.render['grey']), title_position)
 
-    def display_pattern(self):
-        controller = CellController(ci)
+    def display_pattern(self, controller):
         points = []
         self.editing = True
 
@@ -193,10 +187,3 @@ class Screen(object):
 
         pygame.display.flip()
 
-
-def random_color():
-    r = random.randrange(10, 250)
-    g = random.randrange(10, 250)
-    b = random.randrange(10, 250)
-
-    return r, g, b
