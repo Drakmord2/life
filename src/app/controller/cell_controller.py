@@ -1,6 +1,6 @@
 
 import random
-from app.model.cell import Cell
+from ..model.cell import Cell
 
 
 class CellController(object):

@@ -1,7 +1,7 @@
 
 import pygame
-from app.view.screen import Screen
-from app.controller.cell_controller import CellController
+from .view.screen import Screen
+from .controller.cell_controller import CellController
 
 
 class App(object):
