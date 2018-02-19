@@ -74,7 +74,7 @@ class CellController(object):
                 if dead_pos not in positions:
                     positions.append(dead_pos)
 
-                    cell = Cell(dead_pos, False, self.cfg.render['white'])
+                    cell = Cell(dead_pos, False, self.cfg.render['yellow'])
                     cells.append(cell)
 
         cells = self.sort_cells(cells)
@@ -100,7 +100,7 @@ class CellController(object):
                 if dead_pos not in positions:
                     positions.append(dead_pos)
 
-                    cell = Cell(dead_pos, False, self.cfg.render['white'])
+                    cell = Cell(dead_pos, False, self.cfg.render['yellow'])
                     cells.append(cell)
 
         cells = self.sort_cells(cells)

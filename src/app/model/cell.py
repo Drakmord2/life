@@ -5,7 +5,7 @@ from ..config import cfg
 
 class Cell(object):
 
-    def __init__(self, position, alive=True, color=cfg.render['red']):
+    def __init__(self, position, alive=True, color=cfg.render['black']):
         self.position = position
         self.color = color
         self.alive = alive
@@ -30,11 +30,11 @@ class Cell(object):
 
     def live(self):
         self.alive = True
-        self.color = cfg.render['red']
+        self.color = cfg.render['black']
 
     def dead(self):
         self.alive = False
-        self.color = cfg.render['white']
+        self.color = cfg.render['yellow']
 
     def grid_to_pixels(self):
         i, j = self.position

@@ -24,7 +24,8 @@ class App(object):
 
     def on_init(self):
         pygame.init()
-        self._window = pygame.display.set_mode(self.SCREEN_SIZE, pygame.NOFRAME)
+        self._window = pygame.display.set_mode(self.SCREEN_SIZE)
+        pygame.display.set_caption('Life')
         self._screen = Screen(self._window, self.ci)
         self._running = True
 

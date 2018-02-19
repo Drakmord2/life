@@ -18,17 +18,17 @@ class Screen(object):
 
         self._font = pygame.font.Font(None, 72)
         title_position = (245, 80)
-        text = self._font.render('Game of Life', 1, self.cfg.render['white'], self.cfg.render['grey'])
+        text = self._font.render('Game of Life', 1, self.cfg.render['yellow'], self.cfg.render['grey'])
         self._window.blit(text, title_position)
 
         block_position = (200, 200, 400, 200)
-        block_color = self.cfg.render['white']
+        block_color = self.cfg.render['yellow']
         self._window.fill(block_color, block_position)
 
         msg_position = (235, 340)
         self._font = pygame.font.Font(None, 28)
         msg_fg = self.cfg.render['black']
-        msg_bg = self.cfg.render['white']
+        msg_bg = self.cfg.render['yellow']
         msg = 'Scroll down to start a random game'
         self.show_text(self._window, msg_position, msg, msg_fg, msg_bg)
 
@@ -39,7 +39,7 @@ class Screen(object):
         self._font = pygame.font.Font(None, 24)
         footer_position = (350, 470)
         footer = '© Drakmord2'
-        self.show_text(self._window, footer_position, footer, self.cfg.render['white'], self.cfg.render['grey'])
+        self.show_text(self._window, footer_position, footer, self.cfg.render['yellow'], self.cfg.render['grey'])
 
         pygame.display.flip()
 
@@ -54,24 +54,24 @@ class Screen(object):
 
         self._font = pygame.font.Font(None, 35)
         title_position = (310, 12)
-        text = self._font.render('Game of Life', 1, self.cfg.render['white'], self.cfg.render['grey'])
+        text = self._font.render('Game of Life', 1, self.cfg.render['yellow'], self.cfg.render['grey'])
         self._window.blit(text, title_position)
 
         self._font = pygame.font.Font(None, 25)
         generation_position = ((self.cfg.render['width'] - 180), 25)
-        generation_fg = self.cfg.render['white']
+        generation_fg = self.cfg.render['yellow']
         generation_bg = self.cfg.render['grey']
         pos = self.show_text(self._window, generation_position, 'Generation:', generation_fg, generation_bg)
 
         gen_num = str(generation)
-        self.show_text(self._window, pos, gen_num, self.cfg.render['white'], self.cfg.render['grey'])
+        self.show_text(self._window, pos, gen_num, self.cfg.render['yellow'], self.cfg.render['grey'])
 
     def show_pattern_header(self):
         self.show_header_bar()
 
         self._font = pygame.font.Font(None, 35)
         title_position = (300, 12)
-        text = self._font.render('Create Pattern', 1, self.cfg.render['white'], self.cfg.render['grey'])
+        text = self._font.render('Create Pattern', 1, self.cfg.render['yellow'], self.cfg.render['grey'])
         self._window.blit(text, title_position)
 
     def show_header_bar(self):
@@ -86,7 +86,7 @@ class Screen(object):
         while self.editing:
             points = self.on_event(points)
 
-            background = self.cfg.render['white']
+            background = self.cfg.render['yellow']
             self._window.fill(background)
 
             cells = controller.set_cells(points)
@@ -193,7 +193,7 @@ class Screen(object):
             width += 10
 
     def display(self, generation, cells):
-        background = self.cfg.render['white']
+        background = self.cfg.render['yellow']
         self._window.fill(background)
 
         self.show_cells(cells)

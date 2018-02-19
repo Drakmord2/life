@@ -1,7 +1,7 @@
 
-from .app.config import cfg
-from .app.dependencies import DI
-from .app.app import App
+from app.config import cfg
+from app.dependencies import DI
+from app.app import App
 
 
 if __name__ == "__main__":
