@@ -96,8 +96,6 @@ class App(object):
             if self.on_init() is False:
                 return
 
-            pygame.event.set_grab(1)
-
             while self._running:
                 self.main_menu()
 
