@@ -1,8 +1,6 @@
 #!/bin/bash
-
 # Game of Life
 
-INSTALL_DIR="$(cat ./config.cfg)"
+INSTALL_DIR="$(cat /opt/drakmord/life/config.cfg)"
 
-python3 $INSTALL_DIR/src/life.py
-
+python3 "$INSTALL_DIR"/src/life.py

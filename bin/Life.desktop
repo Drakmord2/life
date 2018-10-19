@@ -5,9 +5,5 @@ Version=1.0
 Comment=Game of Life
 Exec=/opt/drakmord/life/RUN
 Icon=/opt/drakmord/life/assets/images/icon.png
-Terminal=false
 Type=Application
-Categories=Game
-Comment[pt_BR]=Game of Life
-Name[pt_BR]=Life
-
+Terminal=true

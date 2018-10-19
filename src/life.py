@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 from app.config import cfg
 from app.dependencies import DI
