@@ -2,6 +2,7 @@
 
 # Game of Life
 
-INSTALL_DIR=$1
+INSTALL_DIR="$(cat ./config.cfg)"
 
 python3 $INSTALL_DIR/src/life.py
+
