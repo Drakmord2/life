@@ -6,4 +6,4 @@ Comment=Game of Life
 Exec=/opt/drakmord/life/RUN
 Icon=/opt/drakmord/life/assets/images/icon.png
 Type=Application
-Terminal=true
+Terminal=false
