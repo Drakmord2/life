@@ -18,12 +18,12 @@ At each step in time, the following transitions occur:
 Two game modes are available:
 
 ### Random Seed
-![Random](https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png)
+<img src="https://github.com/Drakmord2/life/blob/master/assets/images/random-seed.png" width="480" height="480" />
 
 - Start the game with a random initial configuration.
 
 ### Patterns
-<img src="https://github.com/Drakmord2/life/blob/master/assets/images/life.png" width="320" height="320" />
+<img src="https://github.com/Drakmord2/life/blob/master/assets/images/life.png" width="480" height="480" />
 
 - User-defined patterns
 
